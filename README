@@ -1,2 +1,5 @@
 This project aims to make archiving weather data easy. It's a (small) collection of some scripts I've written over the years to gather and store weather information "just in case".
 
+Scripts:
+    weather_observations/metar_archive.py
+        This script is intended to download the hourly observation file from NOAA for archival.
