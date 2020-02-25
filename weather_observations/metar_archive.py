@@ -3,7 +3,7 @@ import os
 import time
 import urllib2
 
-ARCHIVE_PATH = '/root/metar-archive/'
+ARCHIVE_PATH = os.environ.get('METAR_ARCHIVE_PATH', None) or os.getcwd()
 NOAA_URL = "https://tgftp.nws.noaa.gov/data/observations/metar/cycles/*cycle*Z.TXT"
 
 CYCLES = {
