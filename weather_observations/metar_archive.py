@@ -4,7 +4,7 @@ import time
 import urllib2
 
 ARCHIVE_PATH = '/root/metar-archive/'
-NOAA_URL = "http://weather.noaa.gov/pub/data/observations/metar/cycles/*cycle*Z.TXT"
+NOAA_URL = "https://tgftp.nws.noaa.gov/data/observations/metar/cycles/*cycle*Z.TXT"
 
 CYCLES = {
     '00': (datetime.time(23, 45), datetime.time(0, 45)),
