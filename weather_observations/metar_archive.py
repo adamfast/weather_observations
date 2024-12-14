@@ -1,7 +1,7 @@
 import datetime
 import os
 import time
-import urllib2
+import requests
 
 ARCHIVE_PATH = os.environ.get('METAR_ARCHIVE_PATH', None) or os.getcwd()
 NOAA_URL = "https://tgftp.nws.noaa.gov/data/observations/metar/cycles/*cycle*Z.TXT"
@@ -60,10 +60,9 @@ def determine_cycle(for_datetime, number_behind=0):
 
 def download_cycle(cycle, year, month, day):
     pull_url = NOAA_URL.replace('*cycle*', str(cycle))
-    print pull_url
+    print(pull_url)
     try:
-        request = urllib2.Request(pull_url, None)
-        response = urllib2.urlopen(request)
+        response = requests.get(pull_url)
 
         # make sure the path exists, create where necessary
         if not os.path.exists(ARCHIVE_PATH):
@@ -75,15 +74,16 @@ def download_cycle(cycle, year, month, day):
                 os.mkdir(os.path.join(ARCHIVE_PATH, '%s/%s' % (year, month)))
 
         archive_file_path = os.path.join(ARCHIVE_PATH, '%s/%s/%s_%s.txt' % (year, month, day, cycle))
-        print archive_file_path
+        print(archive_file_path)
         if not os.path.exists(archive_file_path): # isn't there already
             archive_file = open(archive_file_path, 'w')
-            archive_file.write(response.read())
+            archive_file.write(response.text)
             archive_file.close()
             print('Downloaded.')
         else:
             print('Existed. exiting.')
     except:
+        raise
         print('HTTP error, going to wait till the next pass')
 
 
